@@ -1,21 +1,9 @@
-<div class="card-columns">
-  <div class="card animated fadeIn fast">
-    <img class="card-img-top" [src]="heroe.img" [alt]="heroe.nombre">
-    <div class="card-body">
-      <h5 class="card-title">{{heroe.nombre}}</h5>
-      <p class="card-text">{{heroe.bio}}</p>
-      <p class="card-text"><small class="text-muted">{{heroe.aparicion}}</small></p>
+<img class="crounded float-left" [src]="heroe.img" [alt]="heroe.nombre">
 
-      <!-- <button (click)="verHeroe(i)" type="button" class="btn btn-outline-primary btn-block">
-        Ver más...
-      </button>
-
-      <a [routerLink]="['/heroe',i]" routerLinkActive="router-link-active" class="btn btn-outline-primary btn-block">
-        Ver más LINK...
-      </a> -->
-
-
+    <div>
+      <h3>{{heroe.nombre}}</h3>
     </div>
-  </div>
-
-</div>
+    <p>{{heroe.bio}}</p>
+    <p><small class="text-muted">{{heroe.aparicion}}</small></p>
+    <img class="img-logo" *ngIf="heroe.casa == 'DC' " src="../../../assets/images/dc.png" [alt]="heroe.nombre">
+    <img class="img-logo" *ngIf="heroe.casa == 'Marvel' " src="../../../assets/images/marvel.png" [alt]="heroe.nombre">

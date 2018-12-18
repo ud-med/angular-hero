@@ -18,6 +18,10 @@ body{
     animation-fill-mode: both;
   }
   
+  .img-logo{
+    width: 120px;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  angular-hero:
+    build: .
+    image: angular-hero:v0.1
+    command: sh -c 'npm install; npm start'
+    ports:
+      - '4200:4200'
+    #volumes:
+    #  - .:/src
