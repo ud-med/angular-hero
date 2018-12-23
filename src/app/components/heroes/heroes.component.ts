@@ -1,7 +1,7 @@
 import { HeroesService } from './../../services/heroes.service';
 import { Component, OnInit } from '@angular/core';
 import { Heroe } from '../../services/heroe';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -14,10 +14,15 @@ export class HeroesComponent implements OnInit {
 
   heroes: Heroe[];
   constructor(private _heroesService: HeroesService,
-    private router: Router) { }
+    private router: Router, private activatedRoute: ActivatedRoute, private _heroeService: HeroesService) { }
 
   ngOnInit() {
     this.heroes = this._heroesService.getHeroes();
+
+    // this.activatedRoute.params.subscribe(params => {
+    //   this.heroes = this._heroeService.searchHeroes(params['filter']);
+    //   console.log(this.heroes);
+    // });
   }
 
   verHeroe(index: number) {

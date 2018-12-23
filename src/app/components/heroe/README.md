@@ -1,0 +1,10 @@
+# PIPES:
+- currency
+- date
+- uppercase
+- lowercase
+- json
+- limitTo
+- async
+- decimal
+- percent

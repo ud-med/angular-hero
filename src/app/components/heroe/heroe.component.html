@@ -1,9 +1,17 @@
-<img class="crounded float-left" [src]="heroe.img" [alt]="heroe.nombre">
+<div class="row">
+  <div class="col-md-4">
+    <img class="img-fluid img-hero" [src]="heroe.img" [alt]="heroe.nombre">
+    <a [routerLink]="['/heroes']" routerLinkActive="router-link-active" class="btn btn-outline-danger btn-block">
+      Back
+    </a>
+  </div>
+  <div class="col-md-8">
 
     <div>
-      <h3>{{heroe.nombre}}</h3>
+      <h3>{{heroe.nombre | uppercase}} <small class="text-muted">({{heroe.aparicion | date:'y'}})</small></h3>
     </div>
     <p>{{heroe.bio}}</p>
-    <p><small class="text-muted">{{heroe.aparicion}}</small></p>
     <img class="img-logo" *ngIf="heroe.casa == 'DC' " src="../../../assets/images/dc.png" [alt]="heroe.nombre">
     <img class="img-logo" *ngIf="heroe.casa == 'Marvel' " src="../../../assets/images/marvel.png" [alt]="heroe.nombre">
+  </div>
+</div>
