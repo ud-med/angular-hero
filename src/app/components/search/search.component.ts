@@ -11,6 +11,7 @@ import { HeroesService } from 'src/app/services/heroes.service';
 export class SearchComponent implements OnInit {
 
   heroes: Heroe[];
+  item: string;
 
   constructor(private _heroeService: HeroesService, private activatedRoute: ActivatedRoute) { }
 
@@ -18,6 +19,7 @@ export class SearchComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.heroes = this._heroeService.searchHeroes(params['filter']);
       console.log(this.heroes);
+      this.item = params['filter'];
     });
   }
 

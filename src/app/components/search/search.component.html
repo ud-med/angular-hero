@@ -1,6 +1,12 @@
-<h1>Heroes</h1><small>Marvel y DC</small>
+<h1>Heros</h1><small>Marvel y DC</small>
 <hr>
-
+<div class="row" *ngIf="heroes.length == 0">
+  <div class="col-md-12">
+    <div class="alert alert-danger" role="alert">
+      {{item}} not found.
+    </div>
+  </div>
+</div>
 <div class="card-columns">
   <div class="card animated fadeIn fast" *ngFor="let heroe of heroes;let i = index">
     <img class="card-img-top" [src]="heroe.img" [alt]="heroe.nombre">
