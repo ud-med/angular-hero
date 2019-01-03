@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Publish app to Docker Hub
           command: |
-            docker login -e $DOCKER_HUB_MAIL -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+            docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
             docker tag angular-hero_angular-hero $DOCKER_HUB_USER/angular-hero:$CIRCLE_SHA1
             docker tag angular-hero_angular-hero $DOCKER_HUB_USER/angular-hero:latest
             docker push $DOCKER_HUB_USER/angular-hero:$CIRCLE_SHA1
