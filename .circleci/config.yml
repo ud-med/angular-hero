@@ -6,6 +6,8 @@ jobs:
       - image: circleci/node:10-browsers
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - restore_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
       - run: npm install
@@ -15,3 +17,11 @@ jobs:
             - "node_modules"
       #- run: xvfb-run -a npm run test -- --single-run --no-progress --browser=ChromeNoSandbox
       #- run: xvfb-run -a npm run e2e -- --no-progress --config=protractor-ci.conf.js
+      - run:
+          name: Publish app to Docker Hub
+          command: |
+            docker login -e $DOCKER_HUB_MAIL -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS
+            docker tag angular-hero_angular-hero $DOCKER_HUB_USER/angular-hero:$CIRCLE_SHA1
+            docker tag angular-hero_angular-hero $DOCKER_HUB_USER/angular-hero:latest
+            docker push $DOCKER_HUB_USER/angular-hero:$CIRCLE_SHA1
+            docker push $DOCKER_HUB_USER_ID/angular-hero:latest

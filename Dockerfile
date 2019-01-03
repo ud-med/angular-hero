@@ -2,8 +2,6 @@
 # https://docs.docker.com/develop/develop-images/multistage-build/#before-multi-stage-builds
 
 # ******************** [ STEP-1 ] build static website *********************
-
-# base image
 FROM node:10.15.0-alpine as builder
 
 RUN apk update && apk add --no-cache make git
