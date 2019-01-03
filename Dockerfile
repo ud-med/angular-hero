@@ -1,40 +1,35 @@
-# base image
-FROM node:9.6.1
+# MULTI STAGE BUILDS
+# https://docs.docker.com/develop/develop-images/multistage-build/#before-multi-stage-builds
 
-# install chrome for protractor tests
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-RUN apt-get update && apt-get install -yq google-chrome-stable
+# ******************** [ STEP-1 ] build static website *********************
+
+# base image
+FROM node:10.15.0-alpine as builder
+
+RUN apk update && apk add --no-cache make git
 
 # set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /usr/src/app/package.json
+# install app dependencies
+COPY package*.json /app/
+# RUN cd /app && npm --force cache clean && npm install
+RUN npm install @angular/cli -g
 RUN npm install
-RUN npm install -g @angular/cli@1.7.1
 
-# add app
-COPY . /usr/src/app
+# Copy project files into the docker image
+COPY . /app
 
-# start app
-CMD ng serve --host 0.0.0.0
-# FROM node:10
-# LABEL key="med2bouanane@gmail.com"
-# #RUN useradd -ms /bin/bash admin
-# #USER admin
-# WORKDIR /src
-# COPY package*.json /src/
-# RUN npm install
-# RUN npm install -g @angular/cli
-# COPY . /src/
-# EXPOSE 4200
-# CMD ng serve --host 0.0.0.0
-# #CMD ["npm", "start","--host=0.0.0.0"]
+# generate the /dist folder that will used in the STEP-2
+RUN npm run build-image
 
-# # docker build -t angular-hero:v0:1 .
-# # docker run -p 4200:4200 angular-hero:v0.1 npm start
+# ************ [ STEP-2 ] build a small nginx image with static website ****************
+FROM nginx:alpine
+
+## Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+## From 'builder'=STAGE_1 copy website to default nginx public folder
+COPY dist/ /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
