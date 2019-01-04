@@ -25,4 +25,4 @@ jobs:
             docker tag $DOCKER_HUB_USER/angular-hero:latest $DOCKER_HUB_USER/angular-hero:v0.0.1
             # docker tag $DOCKER_HUB_USER/angular-hero:v0.0.1 $DOCKER_HUB_USER/angular-hero:latest
             docker push $DOCKER_HUB_USER/angular-hero:v0.0.1
-            docker push $DOCKER_HUB_USER_ID/angular-hero:latest
+            docker push $DOCKER_HUB_USER/angular-hero:latest
